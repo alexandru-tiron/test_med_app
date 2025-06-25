@@ -1,0 +1,9 @@
+.appointment-card{
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background-color: #2190ff;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+}

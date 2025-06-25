@@ -26,6 +26,7 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
     };
     const updatedAppointments = [...appointments, newAppointment];
     setAppointments(updatedAppointments);
+    localStorage.setItem('appointmentData', JSON.stringify(updatedAppointments))
     setShowModal(false);
   };
 

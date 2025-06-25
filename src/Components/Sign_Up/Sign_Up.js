@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import "./Sign_Up.css"
+import React, { useState } from 'react';
+import './Sign_Up.css'
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../../config';
 
 const Sign_Up = () => {
     const [form, setForm] = useState({
@@ -8,36 +10,67 @@ const Sign_Up = () => {
         email: '',
         password: '',
     });
+    const [showerr, setShowerr] = useState(''); // State to show error messages
+    const navigate = useNavigate(); // Navigation hook from react-router
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
 
+    // Function to handle form submission
+    const register = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        // API Call to register user
         const { name, phone, email, password } = form;
-
+        console.log(name, phone, email, password)
         if (!name || !phone || !email || !password) {
-            alert('Please fill in all fields.');
+            setShowerr('Please fill in all fields.');
             return;
         }
 
         const emailRegex = /^\S+@\S+\.\S+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email.');
+            setShowerr('Please enter a valid email.');
             return;
         }
 
         const phoneRegex = /^\d{10}$/;
         if (!phoneRegex.test(phone)) {
-            alert('Phone number must be exactly 10 digits.');
+            setShowerr('Phone number must be exactly 10 digits.');
             return;
         }
-
-        // Success
-        alert('Sign up successful!');
-        // Continue with sign-up logic (e.g., API call)
+        const response = await fetch(`${API_URL}/api/auth/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password,
+                phone: phone,
+            }),
+        });
+        const json = await response.json(); // Parse the response JSON
+        if (json.authtoken) {
+            // Store user data in session storage
+            sessionStorage.setItem("auth-token", json.authtoken);
+            sessionStorage.setItem("name", name);
+            sessionStorage.setItem("phone", phone);
+            sessionStorage.setItem("email", email);
+            // Redirect user to home page
+            navigate("/");
+            window.location.reload(); // Refresh the page
+        } else {
+            if (json.errors) {
+                for (const error of json.errors) {
+                    setShowerr(error.msg); // Show error messages
+                }
+            } else {
+                setShowerr(json.error);
+            }
+        }
     };
 
     return (<div className="container" style={{ marginTop: "5%" }}>
@@ -49,7 +82,7 @@ const Sign_Up = () => {
                 Already a member? <span><a href="/login" style={{ color: "#2190FF" }}> Login</a></span>
             </div>
             <div className="signup-form">
-                <form onSubmit={handleSubmit}>
+                <form method="POST" onSubmit={register}>
 
                     <div className="form-group">
                         <label for="name">Name</label>
@@ -74,6 +107,7 @@ const Sign_Up = () => {
                         <input name="password" id="password" required className="form-control" placeholder="Enter your password" aria-describedby="helpId" value={form.password}
                             onChange={handleChange} />
                     </div>
+                    {showerr && <div className="err" style={{ color: 'red' }}>{showerr}</div>}
 
                     <div className="btn-group">
                         <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button>

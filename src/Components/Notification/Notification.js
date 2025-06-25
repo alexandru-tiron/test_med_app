@@ -30,7 +30,7 @@ const Notification = ({ children }) => {
     }
 
     // Set appointmentData state if storedAppointmentData exists
-    if (storedAppointmentData[0]) {
+    if (storedAppointmentData && storedAppointmentData[0]) {
       setAppointmentData(storedAppointmentData[0]);
     }
   }, []); // Empty dependency array ensures useEffect runs only once after initial render

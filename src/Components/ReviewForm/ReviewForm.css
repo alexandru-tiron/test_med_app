@@ -1,0 +1,52 @@
+.reviewTable{
+    border-collapse: collapse;
+    thead{
+        background-color: #f2f2f2;
+        height: 3rem;
+        th{padding: 0 0.25rem;
+        }
+    }
+    tbody{
+        tr{
+            border-bottom: 2px solid #f3f3f3;
+            height: 3rem;
+            padding: 0.25rem 0;
+            td{           
+                height: 100%;
+                button{
+                    height: 75%;
+                    margin-top: 0;
+                    padding: 0.5rem;
+                    width: 100%;
+                    background-color: #007bff;
+                    color: white;
+                    border-radius: 5px;
+                }
+                button:disabled{
+                    background-color: gray;
+                }
+            }
+
+        }
+    }
+}
+.reviews{
+    margin-top: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10rem auto; 
+}
+.doctorbg{
+    padding: 1rem;
+    background-color: #f5f5f5;
+    h2{
+        text-align: center;
+    }
+}
+.popup-content {
+    margin: auto;
+    background-color: #f5f5f5;
+    width: 25rem;
+    padding: 5px;
+  }

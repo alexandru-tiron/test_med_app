@@ -77,7 +77,12 @@ const Navbar = () => {
         {isLoggedIn?(
           <>
             <li className="link">
-              <button className="btn2" onClick={handleLogout}>
+              <Link to="/instant-consultation">
+                <button className="btn1">Instant Booking</button>
+              </Link>
+            </li>
+            <li className="link">
+              <button className="btn1" onClick={handleLogout}>
                 Logout
               </button>
             </li>

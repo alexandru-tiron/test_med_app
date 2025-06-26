@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import "./Navbar.css";
@@ -13,6 +13,7 @@ const Navbar = () => {
     const[email,setEmail]=useState("");
     const [showDropdown, setShowDropdown] = useState(false);
     const handleClick = () => setClick(!click);
+    const dropdownRef = useRef(null);                        // to detect outside clicks
 
     
     const handleLogout = () => {
@@ -35,9 +36,9 @@ const Navbar = () => {
         setEmail('');
         window.location.reload();
     }
-    const handleDropdown = () => {
-      setShowDropdown(!showDropdown);
-    }
+
+    const handleDropdownToggle = () => setShowDropdown(prev => !prev);
+
     useEffect(() => { 
       const storedemail = sessionStorage.getItem("email");
 
@@ -46,6 +47,16 @@ const Navbar = () => {
             setUsername(storedemail.split("@")[0]);
           }
         }, []);
+
+         useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (showDropdown && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [showDropdown]);
   return (
     <nav>
       <div className="nav__logo">
@@ -70,9 +81,22 @@ const Navbar = () => {
          <Link to="/reviews">Reviews</Link>
         </li>
 
-        {username && <li className="link">
-         <p>Welcome, {username}</p>
-        </li>}
+        {/* ▼ Profile dropdown */}
+        {username && (
+          <li className="link user-menu" ref={dropdownRef}>
+            <p className="user-trigger" onClick={handleDropdownToggle}>
+              Welcome,&nbsp;{username}{" "}
+              <i className={`fa fa-chevron-${showDropdown ? "up" : "down"}`}/>
+            </p>
+
+            {showDropdown && (
+              <div className="dropdown">
+                <Link to="/profile" onClick={()=>setShowDropdown(false)}>Your Profile</Link>
+                <Link to="/reports" onClick={()=>setShowDropdown(false)}>Your Reports</Link>
+              </div>
+            )}
+          </li>
+        )}
 
         {isLoggedIn?(
           <>

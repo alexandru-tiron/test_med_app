@@ -180,3 +180,41 @@ nav {
     color:white; /* Hover effect */
 }
   
+.user-menu { position:relative; }
+
+.user-trigger{
+  border:none;
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  font:inherit;
+  display:flex;
+  align-items:center;
+}
+.user-trigger>i{
+    margin-left: 0.25rem;
+    font-size: 14px;    
+}
+
+.dropdown{
+  position:absolute;
+  top:115%;
+  right:0;
+  background:#fff;
+  border:1px solid #e0e0e0;
+  box-shadow:0 2px 6px rgba(0,0,0,.12);
+  border-radius:4px;
+  min-width:140px;
+  display: flex;
+  flex-direction: column;
+  z-index:1000;
+}
+.dropdown a{
+  display:block;
+  padding:10px 16px;
+  color:#333;
+  text-decoration:none;
+}
+.dropdown a:hover{
+  background:#f5f5f5;
+}

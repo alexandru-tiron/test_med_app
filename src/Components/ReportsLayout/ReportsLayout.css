@@ -38,16 +38,35 @@
     align-items: center;
     padding: 10rem auto; 
 }
-.doctorbg{
-    padding: 1rem;
-    background-color: #f5f5f5;
-    h2{
-        text-align: center;
-    }
-}
 .popup-content {
     margin: auto;
     background-color: #f5f5f5;
-    width: 25rem;
-    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    width: 28rem;
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .doctorbg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .doctorbg h4 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #2190FF;
+    text-align: center;
+  }
+  
+  .doctorbg h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .doctorbg p {
+    font-size: 1rem;
+    line-height: 1.4;
   }
